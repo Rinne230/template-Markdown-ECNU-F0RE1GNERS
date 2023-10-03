@@ -375,7 +375,7 @@ $if(logo)$
 $endif$
 $endif$
 
-\title{\vspace{50mm} \huge Std Code Library \\[20pt]}
+\title{\vspace{50mm} \huge Std Code Library(Qinhuangdao) \\[20pt]}
 \author{tingyx \\[10pt] Nanjing University of Science and Technology}
 \date{\today}
 
