@@ -1,6 +1,6 @@
 ## Tree Dp ## 
 
-1.树的平衡点
+#### 树的平衡点 ####
 
 ```cpp
 function<void(int, int)> dfs = [&](int u, int fa){
@@ -18,7 +18,7 @@ function<void(int, int)> dfs = [&](int u, int fa){
 };
 ```
 
-2.树的最小点覆盖(最少的点覆盖所有边)
+#### 树的最小点覆盖(最少的点覆盖所有边) ####
 
 ```cpp
 void dp(int u) {
@@ -37,7 +37,7 @@ void dp(int u) {
 }
 ```
 
-3.树的最小支配集(最少的点覆盖所有点)
+#### 树的最小支配集(最少的点覆盖所有点) ####
 
  f[i][0]选i且i及i的子树都被覆盖了
  f[i][1]不选i且i被其儿子覆盖
@@ -65,7 +65,7 @@ void dfs(int u, int fa){
 }
 ```
 
-4.树的最大独立集(选定的任意两点之间无边)
+#### 树的最大独立集(选定的任意两点之间无边) ####
 
 ```cpp
 function<void(int, int)> dfs = [&](int u, int fa)
@@ -82,7 +82,81 @@ function<void(int, int)> dfs = [&](int u, int fa)
 };
 ```
 
-5.树上背包(最多不超过 $m$ 条边)
+#### 基环树最大独立集 ####
+
+```cpp
+#include <bits/stdc++.h>
+#define endl '\n'
+
+using ll = long long;
+using db = long double;
+
+constexpr int N = 2e5 + 10;
+constexpr int mod = 998244353;
+
+using namespace std;
+
+void solve(){
+    int n;
+    cin >> n;
+    vector<int> f(n + 1);
+    auto find = [&](auto self, int x) -> int {
+        if (x == f[x]) return x;
+        return f[x] = self(self, f[x]);
+    };
+    vector<int> p(n + 1);
+    int S, T;
+    for (int i = 1; i <= n; ++i) cin >> p[i], f[i] = i;
+    vector<vector<int>> G(n + 1); 
+    for (int i = 1; i <= n; ++i) {
+        int u, v;
+        cin >> u >> v;
+        u++, v++;
+        int fu = find(find, u);
+        int fv = find(find, v);
+        if (fu == fv) {
+            S = u, T = v;
+            continue;
+        }
+        G[u].push_back(v);
+        G[v].push_back(u);
+        f[fu] = fv;
+    }
+    double k;
+    cin >> k;
+    ll ans = 0;
+
+    vector dp(n + 1, vector<ll>(2));
+    auto dfs = [&](auto self, int u, int fa) -> void {
+        dp[u][1] = p[u];
+        dp[u][0] = 0;
+        //cerr << u << endl;
+        for (auto v : G[u]) {
+            if (v == fa) continue;
+            self(self, v, u);
+            dp[u][1] += dp[v][0];
+            dp[u][0] += max(dp[v][1], dp[v][0]);
+        }
+    };
+
+    dfs(dfs, S, 0);
+    ans = max(ans, dp[S][0]);
+    dfs(dfs, T, 0);
+    ans = max(ans, dp[T][0]);
+    cout << fixed << setprecision(1) << 1.0 * ans * k << endl;
+}   
+
+signed main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t = 1;
+    //cin >> t;
+    while(t--) solve();
+    return 0;
+}
+```
+
+#### 树上背包(最多不超过 $m$ 条边) ####
 
 ```cpp
 #include <bits/stdc++.h>
@@ -146,7 +220,7 @@ signed main(){
 }
 ```
 
-6.2022CCPC-A(`树上背包`)
+#### 2022CCPC-A(`树上背包`) ####
 爱丽丝想在公园里找到她丢失的猫。
 
 爱丽丝想在公园里找到她丢失的猫。
@@ -325,7 +399,7 @@ signed main(){
 }
 ```
 
-7.树联通点集(`换根`)
+#### 树联通点集(`换根`) ####
 
 ```cpp
 #include <bits/stdc++.h>
@@ -397,7 +471,7 @@ signed main(){
 }
 ```
 
-8.树划分联通块大小小于等于k(`树上背包`)
+#### 树划分联通块大小小于等于k(`树上背包`) ####
 
 另一种背包写法
 
@@ -461,7 +535,7 @@ signed main(){
 }
 ```
 
-8.树上子链(`点权和最大`)
+#### 树上子链(`点权和最大`) ####
 
 给定一棵树 T ，树 T 上每个点都有一个权值。
 定义一颗树的子链的大小为：这个子链上所有结点的权值和 。
@@ -523,7 +597,7 @@ int main(){
 }
 ```
 
-9.Nim Cheater(`树剖优化dp`)
+#### Nim Cheater(`树剖优化dp`) ####
 
 ```cpp
 #include <bits/stdc++.h>

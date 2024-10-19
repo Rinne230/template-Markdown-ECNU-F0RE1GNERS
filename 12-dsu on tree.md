@@ -1,6 +1,6 @@
 ## dsu on tree ## 
 
-1.点分树模版(`距离为k是否存在`)
+#### 点分树模版(`距离为k是否存在`) ####
 
 ```cpp
 #include <bits/stdc++.h>
@@ -132,7 +132,7 @@ signed main(){
 }
 ```
 
-2.CF600E(`纯板子`)
+#### CF600E(`纯板子`) ####
 
 ```cpp
 #include <bits/stdc++.h>
